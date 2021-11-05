@@ -8,17 +8,30 @@ import {
   useQueryErrorResetBoundary,
 } from "blitz"
 import LoginForm from "app/auth/components/LoginForm"
+import { ArwesThemeProvider, StylesBaseline, Text, Figure } from "@arwes/core"
+import { AnimatorGeneralProvider, Animator } from "@arwes/animation"
+import { Header } from "../core/components/Header"
+
+const generalAnimator = { duration: { enter: 200, exit: 200 } }
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
-    <ErrorBoundary
-      FallbackComponent={RootErrorFallback}
-      onReset={useQueryErrorResetBoundary().reset}
-    >
-      {getLayout(<Component {...pageProps} />)}
-    </ErrorBoundary>
+    <ArwesThemeProvider>
+      <StylesBaseline styles={{ body: { fontFamily: '"Titillium Web", sans-serif' } }} />
+      <AnimatorGeneralProvider animator={generalAnimator}>
+        <div style={{ padding: 16 }}>
+          <Header />
+          <ErrorBoundary
+            FallbackComponent={RootErrorFallback}
+            onReset={useQueryErrorResetBoundary().reset}
+          >
+            {getLayout(<Component {...pageProps} />)}
+          </ErrorBoundary>
+        </div>
+      </AnimatorGeneralProvider>
+    </ArwesThemeProvider>
   )
 }
 
