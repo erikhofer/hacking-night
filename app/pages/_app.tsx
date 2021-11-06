@@ -11,6 +11,7 @@ import LoginForm from "app/auth/components/LoginForm"
 import { ArwesThemeProvider, StylesBaseline, Text, Figure } from "@arwes/core"
 import { AnimatorGeneralProvider, Animator } from "@arwes/animation"
 import { Header } from "../core/components/Header"
+import { NavigationProvider } from "../core/hooks/useNavigation"
 
 const generalAnimator = { duration: { enter: 200, exit: 200 } }
 
@@ -21,15 +22,17 @@ export default function App({ Component, pageProps }: AppProps) {
     <ArwesThemeProvider>
       <StylesBaseline styles={{ body: { fontFamily: '"Titillium Web", sans-serif' } }} />
       <AnimatorGeneralProvider animator={generalAnimator}>
-        <div style={{ padding: 16 }}>
-          <Header />
-          <ErrorBoundary
-            FallbackComponent={RootErrorFallback}
-            onReset={useQueryErrorResetBoundary().reset}
-          >
-            {getLayout(<Component {...pageProps} />)}
-          </ErrorBoundary>
-        </div>
+        <NavigationProvider>
+          <div style={{ padding: 16 }}>
+            <Header />
+            <ErrorBoundary
+              FallbackComponent={RootErrorFallback}
+              onReset={useQueryErrorResetBoundary().reset}
+            >
+              {getLayout(<Component {...pageProps} />)}
+            </ErrorBoundary>
+          </div>
+        </NavigationProvider>
       </AnimatorGeneralProvider>
     </ArwesThemeProvider>
   )
