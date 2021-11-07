@@ -1,6 +1,7 @@
 import { Animator } from "@arwes/animation"
 import { Head, BlitzLayout } from "blitz"
 import React from "react"
+import { NoSsr } from "../components/NoSsr"
 import { useNavigation } from "../hooks/useNavigation"
 
 const Layout: BlitzLayout<{ title?: string }> = ({ title, children }) => {
@@ -11,7 +12,9 @@ const Layout: BlitzLayout<{ title?: string }> = ({ title, children }) => {
         <title>{title || "IDW Hacking Night"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Animator animator={{ activate: !navigating, manager: "stagger" }}>{children}</Animator>
+      <NoSsr>
+        <Animator animator={{ activate: !navigating, manager: "stagger" }}>{children}</Animator>
+      </NoSsr>
     </>
   )
 }

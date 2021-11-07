@@ -74,7 +74,7 @@ const Home: BlitzPage = () => {
       id: index,
       columns: [
         { id: "stars", data: "" + index },
-        { id: "challenge", data: "Foobar Testeroni Challenge" },
+        { id: "challenge", data: <h1>Foobar Testeroni Challenge</h1> },
         ...teams.map((t) => ({ id: t, data: Math.random() < 0.3 ? "✔" : "" })),
       ],
     }))
