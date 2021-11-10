@@ -2,7 +2,7 @@ services:
   - type: web
     name: hacking-night
     env: node
-    plan: starter
+    plan: free
     buildCommand: npm ci && npm run build
     startCommand: npm start
     envVars:
