@@ -1,10 +1,11 @@
-import { Suspense, useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import { Image, Link, BlitzPage, useMutation, Routes } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import logout from "app/auth/mutations/logout"
 import logo from "public/logo.png"
-import { Table } from "@arwes/core"
+import hacker from "public/hacker.jpg"
+import { Figure, Text } from "@arwes/core"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -51,36 +52,25 @@ const UserInfo = () => {
   }
 }
 
-const teams = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-
 const Home: BlitzPage = () => {
-  const [showChild, setShowChild] = useState(false)
-
-  useEffect(() => {
-    setShowChild(true)
-  }, [])
-
-  const columnWidths = ["5%", "20%", ...teams.map((t) => `${75 / teams.length}%`)]
-
-  const headers = [
-    { id: "stars", data: "⭐" },
-    { id: "challenge", data: "Challenge" },
-    ...teams.map((t) => ({ id: t, data: "Team " + t })),
-  ]
-
-  const dataset = Array(10)
-    .fill(0)
-    .map((_, index) => ({
-      id: index,
-      columns: [
-        { id: "stars", data: "" + index },
-        { id: "challenge", data: <h1>Foobar Testeroni Challenge</h1> },
-        ...teams.map((t) => ({ id: t, data: Math.random() < 0.3 ? "✔" : "" })),
-      ],
-    }))
-  return showChild ? (
-    <Table headers={headers} dataset={dataset} columnWidths={columnWidths} />
-  ) : null
+  return (
+    <div style={{ display: "flex", gap: 64 }}>
+      <div style={{ width: 800 }}>
+        <Figure src={hacker.src} alt="Hacker" fluid>
+          Hacking (Symbolbild)
+        </Figure>
+      </div>
+      <div>
+        <Text as="h2" blink>
+          Willkommen zur IDW Hacking Night
+        </Text>
+        <br />
+        <Text as="h3" blink>
+          Sommersemester 2022
+        </Text>
+      </div>
+    </div>
+  )
   return (
     <div className="container">
       <main>
