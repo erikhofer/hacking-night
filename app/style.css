@@ -1,0 +1,15 @@
+html,
+body,
+#__next {
+  min-height: 100vh;
+}
+
+body {
+  background: rgb(2, 17, 20);
+  background: linear-gradient(
+    0deg,
+    rgba(2, 17, 20, 1) 0%,
+    rgba(6, 19, 57, 1) 50%,
+    rgba(6, 48, 56, 1) 100%
+  );
+}

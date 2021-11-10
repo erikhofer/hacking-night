@@ -12,6 +12,7 @@ import { ArwesThemeProvider, StylesBaseline, Text, Figure } from "@arwes/core"
 import { AnimatorGeneralProvider, Animator } from "@arwes/animation"
 import { Header } from "../core/components/Header"
 import { NavigationProvider } from "../core/hooks/useNavigation"
+import "../style.css"
 
 const generalAnimator = { duration: { enter: 200, exit: 200 } }
 
