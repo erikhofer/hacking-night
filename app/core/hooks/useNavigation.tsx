@@ -20,8 +20,7 @@ export function useNavigation(): Navigation {
   useEffect(() => {
     if (navigatingTo != null) {
       setTimeout(() => {
-        setNavigatingTo(null)
-        router.push(navigatingTo)
+        router.push(navigatingTo).then(() => setNavigatingTo(null))
       }, 600)
     }
   }, [navigatingTo, router, setNavigatingTo])
