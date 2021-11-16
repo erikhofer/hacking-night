@@ -13,6 +13,7 @@ import { AnimatorGeneralProvider, Animator } from "@arwes/animation"
 import { Header } from "../core/components/Header"
 import { NavigationProvider } from "../core/hooks/useNavigation"
 import "../style.css"
+import "notyf/notyf.min.css"
 
 const generalAnimator = { duration: { enter: 200, exit: 200 } }
 

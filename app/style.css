@@ -13,3 +13,7 @@ body {
     rgba(6, 48, 56, 1) 100%
   );
 }
+
+textarea {
+  resize: none;
+}
