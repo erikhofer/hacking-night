@@ -36,5 +36,5 @@ const getDb = () => {
     path = join(projectRoot, ".next/serverless/blitz-db.js")
   }
   // eslint-disable-next-line no-eval -- block webpack from following this module path
-  return eval("require")(path).default
+  return (0, eval)("require")(path).default
 }

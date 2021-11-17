@@ -3,7 +3,10 @@ services:
     name: hacking-night
     env: node
     plan: free
-    buildCommand: yarn --frozen-lockfile --prod=false && blitz prisma generate && yarn build
+    buildCommand: yarn --frozen-lockfile --prod=false &&
+      blitz prisma generate &&
+      blitz build &&
+      blitz prisma migrate deploy
     startCommand: yarn start
     envVars:
       - key: NODE_ENV
