@@ -6,6 +6,7 @@ import {
   AuthorizationError,
   ErrorFallbackProps,
   useQueryErrorResetBoundary,
+  Image,
 } from "blitz"
 import LoginForm from "app/auth/components/LoginForm"
 import { ArwesThemeProvider, StylesBaseline, Text, Figure } from "@arwes/core"
@@ -39,6 +40,19 @@ export default function App({ Component, pageProps }: AppProps) {
               >
                 {getLayout(<Component {...pageProps} />)}
               </ErrorBoundary>
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <a
+                href="https://github.com/erikhofer/hacking-night"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                {/*eslint-disable-next-line @next/next/no-img-element*/}
+                <img
+                  alt="GitHub Repo stars"
+                  src="https://img.shields.io/github/stars/erikhofer/hacking-night?logo=github&style=flat-square"
+                />
+              </a>
             </div>
           </div>
         </NavigationProvider>
