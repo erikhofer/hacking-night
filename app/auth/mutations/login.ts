@@ -3,29 +3,28 @@ import db from "db"
 import { Login } from "../validations"
 import { Role } from "types"
 
-export const authenticateUser = async (rawEmail: string, rawPassword: string) => {
-  const email = rawEmail.toLowerCase().trim()
-  const password = rawPassword.trim()
-  const user = await db.user.findFirst({ where: { email } })
-  if (!user) throw new AuthenticationError()
+const onboardingPassword = "123"
+const adminPassword = "456"
 
-  const result = await SecurePassword.verify(user.hashedPassword, password)
+export default resolver.pipe(resolver.zod(Login), async ({ password }, ctx) => {
+  // ⚠ We deliberately don't use password hashing
 
-  if (result === SecurePassword.VALID_NEEDS_REHASH) {
-    // Upgrade hashed password with a more secure hash
-    const improvedHash = await SecurePassword.hash(password)
-    await db.user.update({ where: { id: user.id }, data: { hashedPassword: improvedHash } })
+  if (password === onboardingPassword) {
+    await ctx.session.$create({ userId: "onboarding", role: "ONBOARDING" })
+    return
   }
 
-  const { hashedPassword, ...rest } = user
-  return rest
-}
+  if (password === adminPassword) {
+    await ctx.session.$create({ userId: "admin", role: "ADMIN" })
+    return
+  }
 
-export default resolver.pipe(resolver.zod(Login), async ({ email, password }, ctx) => {
-  // This throws an error if credentials are invalid
-  const user = await authenticateUser(email, password)
+  const team = await db.team.findFirst({ where: { password } })
 
-  await ctx.session.$create({ userId: user.id, role: user.role as Role })
+  if (team) {
+    await ctx.session.$create({ userId: "team" + team.id, role: "TEAM", teamId: team.id })
+    return
+  }
 
-  return user
+  throw new AuthenticationError()
 })

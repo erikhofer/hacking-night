@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react"
 import { Text, Button } from "@arwes/core"
 import { useNavigation } from "../hooks/useNavigation"
 import { NoSsr } from "./NoSsr"
+import logout from "../../auth/mutations/logout"
+import { useMutation, useSession } from "blitz"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons"
 
 export const Header: React.FC = () => {
   const [activate, setActivate] = useState(true)
@@ -30,10 +34,47 @@ export const Header: React.FC = () => {
         <Button onClick={() => navigateTo("/info")}>
           <Text>Info</Text>
         </Button>
-        <Button onClick={() => navigateTo("/admin")}>
-          <Text>Admin</Text>
-        </Button>
+        <UserInfo />
       </NoSsr>
     </div>
   )
+}
+
+const UserInfo: React.FC = () => {
+  const { navigateTo } = useNavigation()
+  const session = useSession()
+  const [logoutMutation] = useMutation(logout)
+
+  if (session.isLoading) return null
+
+  if (session.userId) {
+    return (
+      <>
+        {session.role === "ADMIN" ? (
+          <Button onClick={() => navigateTo("/admin")}>
+            <Text>Admin</Text>
+          </Button>
+        ) : null}
+        <div style={{ flexGrow: 1 }}></div>
+        <FontAwesomeIcon icon={faUserCircle} size="2x" />
+        <Text style={{ marginBottom: 0 }}>{session.userId}</Text>
+        <Button
+          onClick={async () => {
+            await logoutMutation()
+          }}
+        >
+          <Text>Logout</Text>
+        </Button>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <div style={{ flexGrow: 1 }}></div>
+        <Button onClick={() => navigateTo("/login")}>
+          <Text>Login</Text>
+        </Button>
+      </>
+    )
+  }
 }

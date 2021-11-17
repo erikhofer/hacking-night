@@ -3,6 +3,7 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
+import { useNavigation } from "../../core/hooks/useNavigation"
 
 type LoginFormProps = {
   onSuccess?: () => void
@@ -10,22 +11,23 @@ type LoginFormProps = {
 
 export const LoginForm = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
+  const { navigating } = useNavigation()
+
+  if (navigating) return null
 
   return (
     <div>
-      <h1>Login</h1>
-
       <Form
-        submitText="Login"
+        submitText="Anmelden"
         schema={Login}
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ password: "" }}
         onSubmit={async (values) => {
           try {
             await loginMutation(values)
             props.onSuccess?.()
           } catch (error: any) {
             if (error instanceof AuthenticationError) {
-              return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
+              return { [FORM_ERROR]: "Ungültiges Passwort" }
             } else {
               return {
                 [FORM_ERROR]:
@@ -35,18 +37,8 @@ export const LoginForm = (props: LoginFormProps) => {
           }
         }}
       >
-        <LabeledTextField name="email" label="Email" placeholder="Email" />
-        <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
-        <div>
-          <Link href={Routes.ForgotPasswordPage()}>
-            <a>Forgot your password?</a>
-          </Link>
-        </div>
+        <LabeledTextField name="password" label="Passwort" placeholder="123456" type="password" />
       </Form>
-
-      <div style={{ marginTop: "1rem" }}>
-        Or <Link href={Routes.SignupPage()}>Sign Up</Link>
-      </div>
     </div>
   )
 }

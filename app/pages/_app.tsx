@@ -14,6 +14,9 @@ import { Header } from "../core/components/Header"
 import { NavigationProvider } from "../core/hooks/useNavigation"
 import "../style.css"
 import "notyf/notyf.min.css"
+import { config } from "@fortawesome/fontawesome-svg-core"
+import "@fortawesome/fontawesome-svg-core/styles.css"
+config.autoAddCss = false
 
 const generalAnimator = { duration: { enter: 200, exit: 200 } }
 
@@ -25,14 +28,18 @@ export default function App({ Component, pageProps }: AppProps) {
       <StylesBaseline styles={{ body: { fontFamily: '"Titillium Web", sans-serif' } }} />
       <AnimatorGeneralProvider animator={generalAnimator}>
         <NavigationProvider>
-          <div style={{ padding: 16 }}>
+          <div
+            style={{ padding: 16, minHeight: "100vh", display: "flex", flexDirection: "column" }}
+          >
             <Header />
-            <ErrorBoundary
-              FallbackComponent={RootErrorFallback}
-              onReset={useQueryErrorResetBoundary().reset}
-            >
-              {getLayout(<Component {...pageProps} />)}
-            </ErrorBoundary>
+            <div style={{ flexGrow: 1 }}>
+              <ErrorBoundary
+                FallbackComponent={RootErrorFallback}
+                onReset={useQueryErrorResetBoundary().reset}
+              >
+                {getLayout(<Component {...pageProps} />)}
+              </ErrorBoundary>
+            </div>
           </div>
         </NavigationProvider>
       </AnimatorGeneralProvider>
