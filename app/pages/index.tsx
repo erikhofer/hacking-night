@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import hacker from "public/hacker.jpg"

@@ -7,9 +7,13 @@ const CreateTeam = z.object({
   juiceShopUrl: z.string(),
 })
 
-export default resolver.pipe(resolver.zod(CreateTeam), resolver.authorize(), async (input) => {
-  // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-  const team = await db.team.create({ data: { ...input, password: "12345" } })
+export default resolver.pipe(
+  resolver.zod(CreateTeam),
+  resolver.authorize("ADMIN"),
+  async (input) => {
+    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+    const team = await db.team.create({ data: { ...input, password: "12345" } })
 
-  return team
-})
+    return team
+  }
+)

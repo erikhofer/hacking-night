@@ -32,3 +32,8 @@ model Team {
   password     String
   juiceShopUrl String
 }
+
+model Setting {
+  key   String @id
+  value String
+}

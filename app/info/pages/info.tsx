@@ -1,7 +1,8 @@
-import { BlitzPage, useSession } from "blitz"
+import { BlitzPage, useQuery, useSession } from "blitz"
 import React from "react"
-import { Suspense } from "../core/components/Suspense"
-import Layout from "../core/layouts/Layout"
+import { Suspense } from "../../core/components/Suspense"
+import Layout from "../../core/layouts/Layout"
+import getOnboardingInfo from "../queries/getOnboardingInfo"
 
 const InfoPage: BlitzPage = () => {
   return (
@@ -29,7 +30,8 @@ const Info: React.FC = () => {
 }
 
 const OnboardingInfo: React.FC = () => {
-  return <>Onboarding Info</>
+  const [info] = useQuery(getOnboardingInfo, {})
+  return <>Onboarding Info: {info}</>
 }
 
 const TeamInfo: React.FC = () => {
