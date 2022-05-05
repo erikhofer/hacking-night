@@ -19,13 +19,14 @@ const Leaderboard: React.FC = () => {
   const columnWidths = ["20%", ...data.teams.map((t) => `${80 / data.teams.length}%`)]
 
   useEffect(() => {
-    const max = Math.max(
-      document.body.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.clientHeight,
-      document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight
-    )
+    const max = document.body.scrollHeight - document.documentElement.clientHeight
+    // const max = Math.max(
+    //   document.body.scrollHeight,
+    //   document.body.offsetHeight,
+    //   document.documentElement.clientHeight,
+    //   document.documentElement.scrollHeight,
+    //   document.documentElement.offsetHeight
+    // )
     let curr = 0
     let dir = 1
     const interval = setInterval(() => {
