@@ -8,12 +8,12 @@ import db from "./index"
  * realistic data.
  */
 const seed = async () => {
-  for (let i = 0; i < 5; i++) {
+  for (let i = 1; i <= 12; i++) {
     await db.team.create({
       data: {
-        name: `Team ${i + 1}`,
+        name: `Team ${i}`,
         password: "12345",
-        juiceShopUrl: `http://localhost:900${i}`,
+        juiceShopUrl: `http://kiel.totalgrün.de:${5000 + i}`,
       },
     })
   }
